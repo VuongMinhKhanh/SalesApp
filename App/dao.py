@@ -1,5 +1,5 @@
-from SalesApp.App import models
-from SalesApp.App.models import Product, Category
+from App import models
+from App.models import Product, Category
 
 
 def get_categories():
@@ -13,3 +13,5 @@ def get_products(kw):
         products = products.filter(Product.name.contains(kw))
 
     return products.all()
+
+

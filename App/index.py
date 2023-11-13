@@ -1,6 +1,8 @@
 from flask import render_template, request
 import dao
-from SalesApp.App import app
+from App import app, login
+from App import admin
+from App.models import User
 
 
 @app.route("/")
@@ -39,6 +41,11 @@ def hello2():
 
     return render_template("index.html",
                            message="Xin chao %s %s" % (fn, ln))
+
+
+@login.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 
 if __name__ == "__main__":
