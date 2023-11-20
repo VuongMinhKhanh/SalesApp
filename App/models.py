@@ -1,9 +1,16 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, BOOLEAN
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, BOOLEAN, Enum
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from App import app, db
 from flask_login import UserMixin
 import hashlib
+import enum
+
+
+class UserRole(enum.Enum):
+    USER = 1
+    ADMIN = 2
+
 
 class User(db.Model, UserMixin):
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -11,6 +18,7 @@ class User(db.Model, UserMixin):
     active = Column(BOOLEAN, default=True)
     username = Column(String(50), nullable=False)
     password = Column(String(100), nullable=False)
+    user_role = Column(Enum(UserRole), default=UserRole.USER)
 
 
 class Category(db.Model):
@@ -33,14 +41,17 @@ class Product(db.Model):
     active = Column(BOOLEAN, default=True)
     category_id = Column(Integer,
                          ForeignKey(Category.id), nullable=False)
+
     def __str__(self):
         return self.name
 
 
 if __name__ == "__main__":
     with app.app_context():
-        db.create_all()#
-        u = User(name="admin", username="admin", active=True, password=str(hashlib.md5("123456".encode("utf-8")).hexdigest()))
+        db.create_all()
+        u = User(name="admin", username="admin", active=True,
+                 password=str(hashlib.md5("123456".encode("utf-8")).hexdigest())
+                 , user_role=UserRole.ADMIN)
         db.session.add(u)
         db.session.commit()
         """c1 = Category(name="Mobile")
