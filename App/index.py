@@ -1,54 +1,41 @@
 import math
-
 from flask import render_template, request, redirect
 import dao
 from App import app, login
 from App import admin
 from App.models import User
-from flask_login import login_user
+from flask_login import login_user, current_user, UserMixin, AnonymousUserMixin
+
+
+def display_content(file_path):
+    with open(file_path, 'r') as file:
+        file_content = file.readlines()
+        file_content = " ".join(file_content)
+        file.close()
+
+    return file_content
+
+
+def content_list(blog):
+    return display_content(blog[0].content)
 
 
 @app.route("/")
 def home():
-    kw = request.args.get("kw")
-    cate_id = request.args.get("cate_id")
-    page = request.args.get("page")
+    blogs = dao.get_all_blogs()
 
-    data = dao.get_categories()
-    prods = dao.get_products(kw, cate_id, page)
-
-    num = dao.count_products()
+    num = dao.count_blogs()
     page_size = app.config["PAGE_SIZE"]
-    return render_template("index.html", cat=data, products=prods, pages=math.ceil(num/page_size))
+    return render_template("index.html", blogs=blogs, contents=content_list(blogs),
+                           pages=math.ceil(num/page_size), current_user=current_user)
 
 
-@app.route("/test")
-def test():
-    return "Test con cac"
+@app.route("/decode")
+def decode():
+    blog_id = request.args.get("blog")
 
-
-# path params
-@app.route("/hello/<name>")
-def hello(name):
-    return render_template("index.html",
-                           message="Xin chao %s" % name)
-
-
-# number only
-@app.route("/number/<int:num>")
-def number(num):
-    return render_template("index.html",
-                           message="So de^` %d !!!" % num)
-
-
-# ?params
-@app.route("/hello")
-def hello2():
-    fn = request.args["first_name"]
-    ln = request.args["last_name"]
-
-    return render_template("index.html",
-                           message="Xin chao %s %s" % (fn, ln))
+    return render_template("decode.html",
+                           content=content_list(dao.get_blog(blog_id)))
 
 
 @login.user_loader
@@ -67,6 +54,7 @@ def login_admin():
         login_user(user)
 
     return redirect("/admin")
+
 
 
 if __name__ == "__main__":

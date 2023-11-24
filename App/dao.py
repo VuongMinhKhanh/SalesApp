@@ -1,33 +1,19 @@
 from App import models
-from App.models import Product, Category, User
+from App.models import Message, Blog, User
 from App import app
 import hashlib
 
 
-def get_categories():
-    return Category.query.all()
+def get_all_blogs():
+    return Blog.query.all()
 
 
-def get_products(kw, cate_id, page):
-    products = Product.query
-
-    if kw:
-        products = products.filter(Product.name.contains(kw))
-
-    if cate_id:
-        products = products.filter(Product.category_id.__eq__(cate_id))
-
-    if page:
-        page = int(page)
-        page_size = app.config["PAGE_SIZE"]
-        start = (page - 1) * page_size
-        return products.slice(start, start + page_size)
-
-    return products.all()
+def get_blog(blog_id):
+    return Blog.query.filter(Blog.id.contains(blog_id))
 
 
-def count_products():
-    return Product.query.count()
+def count_blogs():
+    return Blog.query.count()
 
 
 def get_user(user_id):

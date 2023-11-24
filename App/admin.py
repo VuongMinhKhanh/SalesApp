@@ -1,4 +1,4 @@
-from App.models import Category, Product, UserRole
+from App.models import Blog, User, Message, UserRole
 from App import app, db
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
@@ -7,7 +7,6 @@ from flask_login import logout_user, current_user
 from flask import redirect
 
 admin = Admin(app, name="Quản trị bán hàng", template_mode="bootstrap4")
-
 
 class AuthenticateAdmin(ModelView):
     def is_accessible(self):
@@ -44,7 +43,7 @@ class LogoutView(AuthenticateUser):
         return redirect("/admin")
 
 
-admin.add_view(MyCategoryView(Category, db.session))
-admin.add_view(MyProductView(Product, db.session))
+# admin.add_view(MyCategoryView(Category, db.session))
+# admin.add_view(MyProductView(Product, db.session))
 admin.add_view(StatsView(name="Thống kê báo cáo"))
 admin.add_view(LogoutView(name="Đăng xuất"))

@@ -1,19 +1,31 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="javascript:void(0)">Website</a>
+        <a class="navbar-brand" href="/">Website</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="mynavbar">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0)">Home</a>
+                    <a class="nav-link" href="/">
+                        <button type="button" class="btn btn-outline-secondary">Home</button>
+                    </a>
                 </li>
-                {% for c in cat %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/?cate_id={{c.id}}">{{c.name}}</a>
+                    <a class="nav-link" href="/admin">
+                        <button type="button" class="btn btn-outline-secondary">Login</button>
+                    </a>
                 </li>
-                {% endfor %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        <button type="button" class="btn btn-outline-secondary">Logout</button>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        <button type="button" class="btn btn-outline-secondary">Library Func</button>
+                    </a>
+                </li>
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="text" name="kw" placeholder="Search">
@@ -22,3 +34,7 @@
         </div>
     </div>
 </nav>
+<div class="p-4 bg-primary text-white text-center">
+    <h1>THỰC HÀNH ATHTTT</h1>
+    <p>Đề tài giấu tin trong văn bản</p>
+</div>

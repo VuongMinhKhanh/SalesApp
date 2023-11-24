@@ -1,32 +1,40 @@
 {% extends "layout/base.html" %}
 {% block title %}Trang chủ{% endblock %}
 {% block content %}
-<h1>Chao mung cac ban da den voi Website</h1>
+{% block current_user %}
+    <h1 class="text-center">Welcome to our blogs!!!</h1>
 
-<section class="container">
-    <div class="row">
-        {% for p in products %}
-        <div class="col-xs-12 col-md-3" style="padding: 5px">
-            <div class="card">
-                <img class="card-img-top" src="{{ p.image }}" alt="Card image">
-                <div class="card-body">
-                    <h4 class="card-title">{{ p.name }}</h4>
-                    <p class="card-text">{{ p.price }}</p>
-                    <a href="#" class="btn btn-primary">Xem chi tiet</a>
-                    <a href="#" class="btn btn-danger">Dat hang</a>
+    <section class="container mb-5">
+        <div class="row">
+            {% for i in range (blogs|length) %}
+                <div class="container mt-5 p-4 border">
+                        <div class="container ">
+                        <div>
+                            <a href="?blog={{ blogs[i].id }}"><h2>{{ blogs[i].title }}</h2></a>
+                        </div>
+                        {% if current_user.is_authenticated %}
+                            {% if current_user.user_role.value >= 2 %}
+                                <div>
+                                    <button type="button" class="btn btn-outline-danger float-end m-1">Delete</button>
+                                    <a href="/decode?blog={{ i + 1 }}">
+                                        <button type="" class="btn btn-outline-success float-end m-1">Decode</button>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-    <div>
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            {% for i in range(pages) %}
-          <li class="page-item"><a class="page-link" href="/?page={{ i + 1 }}">{{ i + 1 }}</a></li>
             {% endfor %}
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-    </div>
-</section>
+        </div>
+    </section>
+    <div class="container">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                {% for i in range(pages) %}
+                    <li class="page-item"><a class="page-link" href="/?page={{ i + 1 }}">{{ i + 1 }}</a></li>
+                {% endfor %}
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </div>
+{% endblock %}
 {% endblock %}
