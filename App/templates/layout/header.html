@@ -1,40 +1,27 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Website</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+        <a class="navbar-brand" href="#">BÁN HÀNG TRỰC TUYẾN</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="mynavbar">
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">
-                        <button type="button" class="btn btn-outline-secondary">Home</button>
-                    </a>
+                    <a class="nav-link active" href="/">Trang chủ</a>
                 </li>
+                {% for c in categories %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin">
-                        <button type="button" class="btn btn-outline-secondary">Login</button>
-                    </a>
+                    <a class="nav-link" href="/?cate_id={{c.id}}">{{ c.name }}</a>
                 </li>
+                {% endfor %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/">
-                        <button type="button" class="btn btn-outline-secondary">Logout</button>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/">
-                        <button type="button" class="btn btn-outline-secondary">Library Func</button>
-                    </a>
+                    <a class="nav-link" href="/cart">&#128722;<span class="badge bg-danger cart-counter">{{ cart_stats.total_quantity }}</span></a>
                 </li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="text" name="kw" placeholder="Search">
-                <button class="btn btn-primary" type="submit">Search</button>
+            <form class="d-flex" method="get" action="/">
+                <input class="form-control me-2" type="text" name="kw" placeholder="Nhập từ khóa...">
+                <button class="btn btn-primary" type="submit">Tìm</button>
             </form>
         </div>
     </div>
 </nav>
-<div class="p-4 bg-primary text-white text-center">
-    <h1>THỰC HÀNH ATHTTT</h1>
-    <p>Đề tài giấu tin trong văn bản</p>
-</div>

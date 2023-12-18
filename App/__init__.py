@@ -1,14 +1,13 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from urllib.parse import quote
+from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
-
 app = Flask(__name__)
-app.secret_key = "abcdefghijklmnopqrstuvwxyz"
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:%s@localhost/blogdb?charset=utf8mb4" \
-                                        % quote("Admin@123")
+app.secret_key = 'GHFGH&*%^$^*(JHFGHF&Y*R%^$%$^&*TGYGJHFHGVJHGY'
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:%s@localhost/saledbv1?charset=utf8mb4" % quote('Admin@123')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
-app.config["PAGE_SIZE"] = 4
+app.config["PAGE_SIZE"] = 2
+
 db = SQLAlchemy(app=app)
 login = LoginManager(app=app)

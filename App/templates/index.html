@@ -1,40 +1,28 @@
-{% extends "layout/base.html" %}
-{% block title %}Trang chủ{% endblock %}
-{% block content %}
-{% block current_user %}
-    <h1 class="text-center">Welcome to our blogs!!!</h1>
+{% extends 'layout/base.html' %}
 
-    <section class="container mb-5">
-        <div class="row">
-            {% for i in range (blogs|length) %}
-                <div class="container mt-5 p-4 border">
-                        <div class="container ">
-                        <div>
-                            <a href="?blog={{ blogs[i].id }}"><h2>{{ blogs[i].title }}</h2></a>
-                        </div>
-                        {% if current_user.is_authenticated %}
-                            {% if current_user.user_role.value >= 2 %}
-                                <div>
-                                    <button type="button" class="btn btn-outline-danger float-end m-1">Delete</button>
-                                    <a href="/decode?blog={{ i + 1 }}">
-                                        <button type="" class="btn btn-outline-success float-end m-1">Decode</button>
-                                    </a>
-                                </div>
-                            {% endif %}
-                        {% endif %}
-                    </div>
+{% block title %}Trang chủ{% endblock %}
+
+{% block content %}
+<section class="container">
+    <ul class="pagination mt-1">
+        {% for i in range(pages) %}
+        <li class="page-item"><a class="page-link" href="/?page={{ i + 1 }}">{{ i + 1 }}</a></li>
+        {% endfor %}
+    </ul>
+    <div class="row">
+        {% for p in products %}
+        <div class="col-xs-12 col-md-3" style="padding: 5px;">
+            <div class="card">
+                <img class="card-img-top" src="{{ p.image }}" alt="Card image">
+                <div class="card-body">
+                    <h4 class="card-title">{{ p.name }}</h4>
+                    <p class="card-text">{{ p.price }} VNĐ</p>
+                    <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                    <a href="javascript:;" onclick="addToCart({{ p.id }}, '{{ p.name }}', {{ p.price }})" class="btn btn-danger">Đặt hàng</a>
                 </div>
-            {% endfor %}
+            </div>
         </div>
-    </section>
-    <div class="container">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                {% for i in range(pages) %}
-                    <li class="page-item"><a class="page-link" href="/?page={{ i + 1 }}">{{ i + 1 }}</a></li>
-                {% endfor %}
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </div>
-{% endblock %}
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}
